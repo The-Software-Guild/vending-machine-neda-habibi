@@ -19,6 +19,10 @@ public class Item {
         return stock;
     }
 
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     public float getCost() {
         return cost;
     }
