@@ -2,9 +2,6 @@ package UI;
 
 import Dto.Change;
 import Dto.Item;
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,14 +11,15 @@ public class UserConsoleInterface implements IUserInterface{
 
     @Override
     public void showItems(List<Item> items){
+        showMessage("Here are the Items:");
         for (Item item : items) {
-            String inventory = String.format("Name: %s | Cost: %s | Stock: %s",
+            String inventory = String.format("%s | Cost: £%s | Stock: %s",
                     item.getName(),
                     item.getCost(),
                     item.getStock());
             showMessage(inventory);
         }
-        System.out.println("");
+        showMessage("");
     }
 
     @Override
@@ -38,7 +36,7 @@ public class UserConsoleInterface implements IUserInterface{
 
     @Override
     public void showChange(Change change) {
-        String message = String.format("Quarters: %s | Dimes: %s | Nickels: %s | Pennies: %s",
+        String message = String.format("Take the change:\n Quarters: %s \n Dimes: %s \n Nickels: %s \n Pennies: %s",
                 change.getQuarters() ,
                 change.getDimes(),
                 change.getNickels(),
@@ -55,24 +53,5 @@ public class UserConsoleInterface implements IUserInterface{
     private String readString(String message) {
         System.out.println(message);
         return console.nextLine();
-    }
-
-    private LocalDate readDate(String msgPrompt) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        boolean invalidInput = true;
-        LocalDate releaseDate = null;
-        do{
-            try {
-                String date = readString(msgPrompt);
-                releaseDate = LocalDate.parse(date, formatter);
-                invalidInput = false;
-
-            } catch (DateTimeException e) {
-                showMessage("Input error. Please try again.");
-            }
-
-        } while(invalidInput);
-
-        return releaseDate;
     }
 }

@@ -6,6 +6,7 @@ public class Change {
     private int nickels;
     private int pennies;
 
+
     public int getQuarters() {
         return quarters;
     }

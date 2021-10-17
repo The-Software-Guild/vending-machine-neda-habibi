@@ -1,3 +1,6 @@
-Apple::5.0::5
-Kitkat::2.0::50
-Laptop::1200.0::3
+Kitkat::2.0::40::
+Chips::2.5::60::
+Water::1.5::10::
+Cookie::1.7::30::
+Apple::2.1::10::
+Snicker::3.2::20::
