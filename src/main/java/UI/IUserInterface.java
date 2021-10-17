@@ -14,4 +14,6 @@ public interface IUserInterface {
 
     void showChange(Change change);
 
+    String selectItem();
+
 }

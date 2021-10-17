@@ -4,6 +4,7 @@ import Dto.Item;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ItemDao implements IItemDao{
@@ -35,7 +36,7 @@ public class ItemDao implements IItemDao{
 
     @Override
     public Item getItem(String name) {
-        return items.stream().filter(p -> p.getName().equals(name)).findFirst().orElse(null);
+        return items.stream().filter(p -> p.getName().toLowerCase().equals(name.toLowerCase())).findFirst().orElse(null);
     }
 
     private void writeToFile() throws IOException {

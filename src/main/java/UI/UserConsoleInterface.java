@@ -31,6 +31,12 @@ public class UserConsoleInterface implements IUserInterface{
     }
 
     @Override
+    public String selectItem() {
+        String name = readString("Please select the item through the name:");
+        return name;
+    }
+
+    @Override
     public void showChange(Change change) {
         String message = String.format("Quarters: %s | Dimes: %s | Nickels: %s | Pennies: %s",
                 change.getQuarters() ,
