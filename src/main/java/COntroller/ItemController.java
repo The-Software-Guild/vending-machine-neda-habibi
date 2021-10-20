@@ -2,6 +2,7 @@ package Controller;
 
 import Dao.IItemDao;
 import Dto.Change;
+import Dto.Enums.Coin;
 import Dto.Item;
 import UI.IUserInterface;
 
@@ -64,18 +65,18 @@ public class ItemController {
         }
 
         Change change = new Change();;
-        change.setQuarters(remainingInPence / 25);
-        remainingInPence = remainingInPence % 25;
+        change.setQuarters(remainingInPence / Coin.QUARTER.value());
+        remainingInPence = remainingInPence % Coin.QUARTER.value();
         if(remainingInPence == 0){
             return  change;
         }
-        change.setDimes(remainingInPence / 10);
-        remainingInPence = remainingInPence % 10;
+        change.setDimes(remainingInPence / Coin.DIME.value());
+        remainingInPence = remainingInPence % Coin.DIME.value();
         if(remainingInPence == 0){
             return  change;
         }
-        change.setNickels(remainingInPence / 5);
-        remainingInPence = remainingInPence % 5;
+        change.setNickels(remainingInPence / Coin.NICKLE.value());
+        remainingInPence = remainingInPence % Coin.NICKLE.value();
         if(remainingInPence == 0){
             return  change;
         }
