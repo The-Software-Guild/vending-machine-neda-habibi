@@ -2,9 +2,9 @@ package Dao;
 
 import Dto.Item;
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class ItemDao implements IItemDao{
@@ -76,7 +76,7 @@ public class ItemDao implements IItemDao{
     private Item unmarshall(String serializedDvd){
         String[] splitedItem = serializedDvd.split(SEPARATOR);
         Item dvdFromFile = new Item(splitedItem[0],
-                                    Float.parseFloat( splitedItem[1]),
+                                    new BigDecimal(splitedItem[1]),
                                     Integer.parseInt(splitedItem[2])
                                     );
 

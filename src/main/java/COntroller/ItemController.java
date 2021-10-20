@@ -1,13 +1,14 @@
 package Controller;
 
+import Dao.IEventLogDao;
 import Dao.IItemDao;
 import Dto.Change;
 import Dto.Enums.Coin;
+import Dto.EventLog;
 import Dto.Item;
 import UI.IUserInterface;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,10 +16,12 @@ public class ItemController {
 
     private IItemDao itemDao;
     private IUserInterface userInterface;
+    private IEventLogDao eventLogDao;
 
-    public ItemController(IUserInterface userInterface, IItemDao itemDao) {
+    public ItemController(IUserInterface userInterface, IItemDao itemDao, IEventLogDao eventLogDao) {
         this.userInterface = userInterface;
         this.itemDao = itemDao;
+        this.eventLogDao = eventLogDao;
     }
 
     public void run() throws IOException {
@@ -28,10 +31,10 @@ public class ItemController {
             List<Item> StockItems = items.stream().filter(p -> p.getStock() > 0).toList();
             userInterface.showItems(StockItems);
             String input = userInterface.putAmount();
-            float amount;
+            BigDecimal amount;
 
             try{
-                amount = Float.parseFloat(input);
+                amount = new BigDecimal(input);
             }
             catch (Exception ex){
                 userInterface.showMessage("Invalid amount!");
@@ -47,19 +50,20 @@ public class ItemController {
                continue;
            }
 
-           if (selectedItem.getCost() > amount){
+           if (selectedItem.getCost().compareTo( amount) == 1){
                userInterface.showMessage("Insufficient Amount!");
                userInterface.showMessage("Here is your amount: £" + amount);
                continue;
            }
 
            itemDao.updateStock(selectedItem.getName(),selectedItem.getStock() - 1);
+           eventLogDao.log(new EventLog(selectedItem.getName() + " Sold."));
            userInterface.showChange(getChange(amount,selectedItem.getCost()));
         }
     }
 
-    Change getChange(float amount, float cost) {
-        int remainingInPence = (int)((amount - cost)*100);
+    Change getChange(BigDecimal amount, BigDecimal cost) {
+        int remainingInPence = amount.subtract(cost).multiply(new BigDecimal("100")).intValue();
         if (remainingInPence <= 0){
             return new Change();
         }

@@ -1,11 +1,13 @@
 package Dto;
 
+import java.math.BigDecimal;
+
 public class Item {
     private String name;
     private int stock;
-    private float cost;
+    private BigDecimal cost;
 
-    public Item(String name, float cost, int stock) {
+    public Item(String name, BigDecimal cost, int stock) {
         this.name = name;
         this.cost = cost;
         this.stock = stock;
@@ -23,7 +25,7 @@ public class Item {
         this.stock = stock;
     }
 
-    public float getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 }
